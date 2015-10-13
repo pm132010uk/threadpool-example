@@ -1,6 +1,5 @@
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
-
     public class ThreadPoolApp {
         public static void main (String [] args) {
             if (args.length < 2)
@@ -12,10 +11,15 @@ import java.util.concurrent.ExecutorService;
                 ThreadPoolApp.error();
             ExecutorService pool = Executors.newFixedThreadPool(numberOfThreads);
             
-            Job [] jobs = new Job [numberOfJobs];
-            for (int i = 0; i < numberOfJobs; i++) {
+            Job [] jobs = new Job [numberOfJobs/2];
+            for (int i = 0; i < numberOfJobs/2; i++) {
                 jobs[i] = new Job (i);
                 pool.execute(jobs[i]); //executes the command at some future time.
+            }
+            Job2 [] job2s = new Job2 [numberOfJobs/2];
+            for (int i = 0; i < numberOfJobs/2; i++) {
+                job2s[i] = new Job2 (i);
+                pool.execute(job2s[i]); //executes the command at some future time.
             }
             pool.shutdown(); // Shutdown : previously submitted tasks are executed,
                              // but no new tasks will be accepted.
@@ -30,4 +34,5 @@ import java.util.concurrent.ExecutorService;
         " integer arguments. The first detailing the number of jobs " +
         " the second the number of processing threads in the pool");
     System.exit(0); // exit program
-}}
+   }
+}
